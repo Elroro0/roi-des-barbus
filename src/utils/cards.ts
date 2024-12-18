@@ -6,32 +6,33 @@ export interface Card {
   image: string;
 }
 
-const getRuleForCard = (symbol: string): string => {
+const getRuleForCard = (symbol: string, suit: string): string => {
   switch (symbol) {
     case 'K':
-      return 'Tu es le Roi des Barbus ! Tous les joueurs doivent mettre leur poing sous leur menton quand tu le demandes. Le dernier à le faire boit une gorgée.';
+      return 'Tu deviens le Roi de la table ! Tu peux placer ton poing sous ton menton à tout moment. Tous les autres joueurs doivent suivre. Le dernier à le faire boit une gorgée.';
     case 'Q':
-      return 'Tu es la Reine ! Distribue 2 gorgées à qui tu veux.';
+      return 'Toutes les femmes boivent une gorgée !';
     case 'J':
-      return 'Tu es le Valet ! Bois une gorgée avec la personne de ton choix.';
+      return 'Tous les hommes boivent une gorgée !';
     case '10':
-      return 'Choisis un thème. Chaque joueur doit dire un mot lié à ce thème. Le premier qui hésite ou se répète boit 2 gorgées.';
+      return 'Choisis un thème (films, pays, couleurs, etc.). Chaque joueur doit nommer un élément du thème. Celui qui échoue boit une gorgée.';
     case '9':
-      return 'Fais une action. Tous ceux qui ne peuvent pas ou ne veulent pas la refaire boivent une gorgée.';
+      return 'Dis une chose que tu n\'as jamais faite. Ceux qui l\'ont faite boivent une gorgée. Si personne ne l\'a faite, tu bois autant de gorgées que le nombre de joueurs.';
     case '8':
-      return 'La cascade ! Commence à boire, le joueur suivant peut commencer quand tu t\'arrêtes, etc.';
+      return 'Dis une chose que tu as déjà faite. Ceux qui ne l\'ont jamais faite boivent une gorgée. Si tout le monde l\'a déjà faite, tu bois autant de gorgées que le nombre de joueurs.';
     case '7':
-      return 'Lève ton verre et dis "À la santé de...". Le dernier à trinquer boit 2 gorgées.';
+      return 'Lance le jeu "Dans ma valise" ! Chaque joueur ajoute un élément. Tu peux dire "Répète" pour défier le dernier joueur. S\'il réussit, tu bois double. S\'il échoue, il boit une gorgée.';
     case '6':
-      return 'Tous les joueurs qui ont une barbe boivent une gorgée !';
+      return 'Tu as deux options : 1) Ajouter une nouvelle règle temporaire jusqu\'au prochain 6, ou 2) Supprimer une règle existante.';
     case '5':
-      return 'Invente une règle qui restera valable jusqu\'à la fin de la partie.';
     case '4':
-      return 'Tous ceux qui ont bu depuis le début de la partie boivent encore une gorgée.';
     case '3':
-      return 'Distribue 3 gorgées comme tu veux.';
     case '2':
-      return 'Choisis quelqu\'un qui devra boire 2 gorgées.';
+    case '1':
+      const isRed = ['hearts', 'diamonds'].includes(suit);
+      return isRed ? 
+        `Bois ${symbol} gorgées !` :
+        `Distribue ${symbol} gorgées à d'autres joueurs !`;
     case 'A':
       return 'Bois une gorgée !';
     default:
@@ -74,13 +75,13 @@ export const generateDeck = (): Card[] => {
       deck.push({
         symbol,
         suit,
-        rule: getRuleForCard(symbol),
+        rule: getRuleForCard(symbol, suit),
         isRed: suit === 'hearts' || suit === 'diamonds',
         image: `${process.env.PUBLIC_URL}/images/cards/${symbol}_${suit}.jpg`
       });
       
       // Log pour le débogage
-      console.log(`Création carte: ${symbol} de ${suit}, règle: ${getRuleForCard(symbol)}`);
+      console.log(`Création carte: ${symbol} de ${suit}, règle: ${getRuleForCard(symbol, suit)}`);
     }
   }
   
