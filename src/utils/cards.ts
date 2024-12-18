@@ -7,6 +7,8 @@ export interface Card {
 }
 
 const getRuleForCard = (symbol: string, suit: string): string => {
+  const isRed = ['hearts', 'diamonds'].includes(suit);
+  
   switch (symbol) {
     case 'K':
       return 'Tu deviens le Roi de la table ! Tu peux placer ton poing sous ton menton à tout moment. Tous les autres joueurs doivent suivre. Le dernier à le faire boit une gorgée.';
@@ -17,19 +19,18 @@ const getRuleForCard = (symbol: string, suit: string): string => {
     case '10':
       return 'Choisis un thème (films, pays, couleurs, etc.). Chaque joueur doit nommer un élément du thème. Celui qui échoue boit une gorgée.';
     case '9':
-      return 'Dis une chose que tu n\'as jamais faite. Ceux qui l\'ont faite boivent une gorgée. Si personne ne l\'a faite, tu bois autant de gorgées que le nombre de joueurs.';
+      return 'Dis une chose que tu n\'as jamais faite. Ceux qui l\'ont faite boivent une gorgée.';
     case '8':
-      return 'Dis une chose que tu as déjà faite. Ceux qui ne l\'ont jamais faite boivent une gorgée. Si tout le monde l\'a déjà faite, tu bois autant de gorgées que le nombre de joueurs.';
+      return 'Dis une chose que tu as déjà faite. Ceux qui ne l\'ont jamais faite boivent une gorgée.';
     case '7':
-      return 'Lance le jeu "Dans ma valise" ! Chaque joueur ajoute un élément. Tu peux dire "Répète" pour défier le dernier joueur. S\'il réussit, tu bois double. S\'il échoue, il boit une gorgée.';
+      return 'Lance le jeu "Dans ma valise" ! Chaque joueur ajoute un élément, le perdant boit.';
     case '6':
-      return 'Tu as deux options : 1) Ajouter une nouvelle règle temporaire jusqu\'au prochain 6, ou 2) Supprimer une règle existante.';
+      return 'Tu peux soit ajouter une nouvelle règle temporaire, soit supprimer une règle existante.';
     case '5':
     case '4':
     case '3':
     case '2':
     case '1':
-      const isRed = ['hearts', 'diamonds'].includes(suit);
       return isRed ? 
         `Bois ${symbol} gorgées !` :
         `Distribue ${symbol} gorgées à d'autres joueurs !`;
