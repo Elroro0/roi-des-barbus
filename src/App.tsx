@@ -1,39 +1,31 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Game from './components/Game/Game';
-import { PlayersProvider } from './context/PlayersContext';
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  * {
+  body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-  }
-
-  body {
-    background: #1a1a1a;
-    color: #fff;
-    min-height: 100vh;
-    width: 100%;
+    background-color: #1a1a1a;
+    color: white;
+    font-family: Arial, sans-serif;
   }
 `;
 
-function App() {
-  const basename = process.env.PUBLIC_URL;
-
+const App: React.FC = () => {
   return (
-    <PlayersProvider>
-      <Router basename={basename}>
-        <GlobalStyle />
+    <>
+      <GlobalStyle />
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/game" element={<Game />} />
         </Routes>
-      </Router>
-    </PlayersProvider>
+      </HashRouter>
+    </>
   );
 };
 
