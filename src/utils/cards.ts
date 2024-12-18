@@ -11,31 +11,33 @@ const getRuleForCard = (symbol: string, suit: string): string => {
   
   switch (symbol) {
     case 'K':
-      return 'Tu deviens le Roi de la table ! Tu peux placer ton poing sous ton menton à tout moment. Tous les autres joueurs doivent suivre. Le dernier à le faire boit une gorgée.';
+      return 'Le joueur devient le Roi de la table. Il peut placer son poing sous son menton à tout moment. Tous les autres joueurs doivent suivre. Le dernier à le faire boit une gorgée.';
     case 'Q':
-      return 'Toutes les femmes boivent une gorgée !';
+      return 'Toutes les femmes boivent une gorgée.';
     case 'J':
-      return 'Tous les hommes boivent une gorgée !';
+      return 'Tous les hommes boivent une gorgée.';
     case '10':
-      return 'Choisis un thème (films, pays, couleurs, etc.). Chaque joueur doit nommer un élément du thème. Celui qui échoue boit une gorgée.';
+      return 'Le joueur choisit un thème (films, pays, couleurs, etc.). Chaque joueur doit nommer un élément du thème. Celui qui échoue boit une gorgée.';
     case '9':
-      return 'Dis une chose que tu n\'as jamais faite. Ceux qui l\'ont faite boivent une gorgée.';
+      return 'Le joueur dit une chose qu\'il n\'a jamais faite. Ceux qui l\'ont faite boivent une gorgée. Si personne ne l\'a faite, le joueur boit autant de gorgées que le nombre de joueurs.';
     case '8':
-      return 'Dis une chose que tu as déjà faite. Ceux qui ne l\'ont jamais faite boivent une gorgée.';
+      return 'Le joueur dit une chose qu\'il a déjà faite. Ceux qui ne l\'ont jamais faite boivent une gorgée. Si tout le monde l\'a déjà faite, le joueur boit autant de gorgées que le nombre de joueurs.';
     case '7':
-      return 'Lance le jeu "Dans ma valise" ! Chaque joueur ajoute un élément, le perdant boit.';
+      return 'Le joueur lance le jeu "Dans ma valise". Chaque joueur ajoute un élément à la valise. Option spéciale : Le joueur actuel peut dire "Répète" pour défier le dernier joueur. Si le dernier joueur réussit à répéter, le joueur actuel boit double. Si le dernier joueur échoue, il boit une gorgée.';
     case '6':
-      return 'Tu peux soit ajouter une nouvelle règle temporaire, soit supprimer une règle existante.';
+      return 'Le joueur a deux options : 1) Ajouter une nouvelle règle temporaire jusqu\'au prochain 6, ou 2) Supprimer une règle existante.';
     case '5':
     case '4':
     case '3':
     case '2':
     case '1':
       return isRed ? 
-        `Bois ${symbol} gorgées !` :
-        `Distribue ${symbol} gorgées à d'autres joueurs !`;
+        `Le joueur boit ${symbol} gorgées.` :
+        `Le joueur distribue ${symbol} gorgées à d'autres joueurs.`;
     case 'A':
-      return 'Bois une gorgée !';
+      return isRed ? 
+        'Le joueur boit 1 gorgée.' :
+        'Le joueur distribue 1 gorgée à un autre joueur.';
     default:
       return '';
   }
