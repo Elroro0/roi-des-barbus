@@ -20,10 +20,12 @@ const HomeContainer = styled.div`
 `;
 
 const TitleImage = styled.img`
-  width: 800px;
+  width: 600px;
   max-width: 90%;
-  margin-top: 2rem;
-  margin-bottom: 4rem;
+  margin: 2rem auto;
+  display: block;
+  position: relative;
+  top: 20px;
   transition: transform 0.3s ease;
 
   &:hover {
@@ -187,7 +189,7 @@ const Home: React.FC = () => {
     <HomeContainer>
       <InfoButton isGamePage={false} />
       {showConfetti && <Confetti numberOfPieces={50} recycle={true} />}
-      <TitleImage src={`${process.env.PUBLIC_URL}/title.png`} alt="Roi des Barbus" />
+      <TitleImage src={`${process.env.PUBLIC_URL}/images/title.png`} alt="Roi des Barbus" />
       
       <PlayersList>
         <InputContainer>
