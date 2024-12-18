@@ -114,49 +114,50 @@ const CardsContainer = styled.div`
 `;
 
 const CardWrapper = styled(motion.div)<{ isRevealed: boolean }>`
+  width: 300px;
+  height: 450px;
+  position: relative;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 300px;
+  }
+`;
+
+const CardBack = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-  z-index: ${props => props.isRevealed ? 2 : 1};
-`;
-
-const CardBack = styled(motion.div)`
-  position: absolute;
-  width: 220px;
-  height: 320px;
   backface-visibility: hidden;
-  background: url(${process.env.PUBLIC_URL}/images/cardback.jpg) no-repeat center center;
+  background-image: url(${process.env.PUBLIC_URL}/cardback.jpg);
   background-size: cover;
+  background-position: center;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  border: 2px solid gold;
-  cursor: pointer;
 `;
 
-const CardFront = styled(motion.div)`
+const CardFront = styled.div`
   position: absolute;
-  width: 220px;
-  height: 320px;
+  width: 100%;
+  height: 100%;
   backface-visibility: hidden;
   transform: rotateY(180deg);
   background: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  border: 2px solid gold;
-  cursor: pointer;
-  z-index: 3;
+  overflow: hidden;
 `;
 
 const CardImage = styled(motion.img)`
-  width: 200px;
-  max-width: 80%;
-  cursor: pointer;
-  margin-top: 2rem;
-
-  @media (max-width: 768px) {
-    margin-top: 3rem;
-  }
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 0;
+  padding: 0;
 `;
 
 const DeckPile = styled(motion.div)`
