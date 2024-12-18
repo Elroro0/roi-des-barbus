@@ -90,20 +90,32 @@ const TableArea = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 2rem;
-  padding: 1rem;
+  min-height: 70vh;
+  position: relative;
 
   @media (max-width: 768px) {
-    margin-top: 4rem;
+    min-height: 60vh;
+    margin-top: -2rem;
   }
 `;
 
 const CardArea = styled.div`
-  margin-top: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  @media (max-width: 768px) {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: -3rem;
+  }
 `;
 
 const CardsContainer = styled.div`
