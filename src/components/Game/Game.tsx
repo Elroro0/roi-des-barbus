@@ -80,19 +80,26 @@ const PlayerTurnText = styled.h2`
   padding: 10px 30px;
   border-radius: 15px;
   border: 2px solid #ffd700;
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  margin-bottom: 2rem;
   white-space: nowrap;
 `;
 
 const TableArea = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    margin-top: 4rem;
+  }
+`;
+
+const CardArea = styled.div`
+  margin-top: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,12 +148,15 @@ const CardFront = styled(motion.div)`
   z-index: 3;
 `;
 
-const CardImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+const CardImage = styled(motion.img)`
+  width: 200px;
+  max-width: 80%;
+  cursor: pointer;
+  margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    margin-top: 3rem;
+  }
 `;
 
 const DeckPile = styled(motion.div)`
@@ -318,27 +328,29 @@ const Game: React.FC = () => {
       </PlayerTurnText>
 
       <TableArea>
-        <CardsContainer>
-          <CardWrapper
-            isRevealed={!isDrawing}
-            initial={{ rotateY: 0 }}
-            animate={{ rotateY: isDrawing ? 0 : 180 }}
-            transition={{ 
-              duration: 0.6,
-              ease: "easeInOut"
-            }}
-          >
-            <CardBack onClick={handleCardClick} />
-            {currentCard && (
-              <CardFront onClick={handleNextTurn}>
-                <CardImage 
-                  src={currentCard.image} 
-                  alt={`${currentCard.symbol} of ${currentCard.suit}`} 
-                />
-              </CardFront>
-            )}
-          </CardWrapper>
-        </CardsContainer>
+        <CardArea>
+          <CardsContainer>
+            <CardWrapper
+              isRevealed={!isDrawing}
+              initial={{ rotateY: 0 }}
+              animate={{ rotateY: isDrawing ? 0 : 180 }}
+              transition={{ 
+                duration: 0.6,
+                ease: "easeInOut"
+              }}
+            >
+              <CardBack onClick={handleCardClick} />
+              {currentCard && (
+                <CardFront onClick={handleNextTurn}>
+                  <CardImage 
+                    src={currentCard.image} 
+                    alt={`${currentCard.symbol} of ${currentCard.suit}`} 
+                  />
+                </CardFront>
+              )}
+            </CardWrapper>
+          </CardsContainer>
+        </CardArea>
       </TableArea>
 
       {gameEnded && (

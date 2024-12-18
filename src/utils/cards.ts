@@ -9,28 +9,31 @@ export interface Card {
 const getRuleForCard = (symbol: string): string => {
   switch (symbol) {
     case 'K':
-      return 'Tu deviens le Roi de la table ! Tu peux forcer les joueurs à poser leur poing sous le menton à tout moment.';
+      return 'Tu es le Roi des Barbus ! Tous les joueurs doivent mettre leur poing sous leur menton quand tu le demandes. Le dernier à le faire boit une gorgée.';
     case 'Q':
-      return 'Toutes les femmes boivent une gorgée !';
+      return 'Tu es la Reine ! Distribue 2 gorgées à qui tu veux.';
     case 'J':
-      return 'Tous les hommes boivent une gorgée !';
+      return 'Tu es le Valet ! Bois une gorgée avec la personne de ton choix.';
+    case '10':
+      return 'Choisis un thème. Chaque joueur doit dire un mot lié à ce thème. Le premier qui hésite ou se répète boit 2 gorgées.';
+    case '9':
+      return 'Fais une action. Tous ceux qui ne peuvent pas ou ne veulent pas la refaire boivent une gorgée.';
+    case '8':
+      return 'La cascade ! Commence à boire, le joueur suivant peut commencer quand tu t\'arrêtes, etc.';
+    case '7':
+      return 'Lève ton verre et dis "À la santé de...". Le dernier à trinquer boit 2 gorgées.';
+    case '6':
+      return 'Tous les joueurs qui ont une barbe boivent une gorgée !';
+    case '5':
+      return 'Invente une règle qui restera valable jusqu\'à la fin de la partie.';
+    case '4':
+      return 'Tous ceux qui ont bu depuis le début de la partie boivent encore une gorgée.';
+    case '3':
+      return 'Distribue 3 gorgées comme tu veux.';
+    case '2':
+      return 'Choisis quelqu\'un qui devra boire 2 gorgées.';
     case 'A':
       return 'Bois une gorgée !';
-    case '2':
-    case '3':
-    case '4':
-    case '5':
-      return `Bois ${symbol} gorgées !`;
-    case '6':
-      return 'Tu peux soit ajouter une nouvelle règle temporaire, soit supprimer une règle existante.';
-    case '7':
-      return 'Lance le jeu "Dans ma valise" ! Chaque joueur ajoute un élément, le perdant boit.';
-    case '8':
-      return 'Dis une chose que tu as déjà faite mais que les autres non, ou bois autant de gorgées que le nombre de joueurs si tout le monde l\'a déjà fait.';
-    case '9':
-      return 'Dis une chose que tu n\'as jamais faite, les autres boivent s\'ils l\'ont fait.';
-    case '10':
-      return 'Choisis un thème, et tous les joueurs nomment un élément du thème (le perdant boit).';
     default:
       return '';
   }
@@ -40,22 +43,21 @@ const getRuleForCard = (symbol: string): string => {
 export const shuffleArray = <T>(array: T[]): T[] => {
   const shuffled = [...array];
   
-  // Premier mélange
+  // Premier mélange (Fisher-Yates)
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   
-  // Deuxième mélange
+  // Deuxième mélange avec décalage
   for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(Math.random() * shuffled.length);
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   
-  // Troisième mélange
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  // Troisième mélange avec inversion aléatoire
+  if (Math.random() > 0.5) {
+    shuffled.reverse();
   }
   
   return shuffled;
