@@ -21,10 +21,12 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App: React.FC = () => {
+function App() {
+  const basename = process.env.PUBLIC_URL;
+
   return (
     <PlayersProvider>
-      <Router>
+      <Router basename={basename}>
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<Home />} />
