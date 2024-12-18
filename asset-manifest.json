@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "./static/css/main.e6c13ad2.css",
-    "main.js": "./static/js/main.ae8f1134.js",
-    "static/js/453.df9594bf.chunk.js": "./static/js/453.df9594bf.chunk.js",
-    "index.html": "./index.html",
-    "main.e6c13ad2.css.map": "./static/css/main.e6c13ad2.css.map",
-    "main.ae8f1134.js.map": "./static/js/main.ae8f1134.js.map",
-    "453.df9594bf.chunk.js.map": "./static/js/453.df9594bf.chunk.js.map"
+    "main.css": "/roi-des-barbus/static/css/main.e6c13ad2.css",
+    "main.js": "/roi-des-barbus/static/js/main.258571ed.js",
+    "static/js/453.df9594bf.chunk.js": "/roi-des-barbus/static/js/453.df9594bf.chunk.js",
+    "index.html": "/roi-des-barbus/index.html",
+    "main.e6c13ad2.css.map": "/roi-des-barbus/static/css/main.e6c13ad2.css.map",
+    "main.258571ed.js.map": "/roi-des-barbus/static/js/main.258571ed.js.map",
+    "453.df9594bf.chunk.js.map": "/roi-des-barbus/static/js/453.df9594bf.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.ae8f1134.js"
+    "static/js/main.258571ed.js"
   ]
 }
