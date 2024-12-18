@@ -71,18 +71,16 @@ export const generateDeck = (): Card[] => {
   
   for (const suit of suits) {
     for (const symbol of symbols) {
-      const card: Card = {
+      deck.push({
         symbol,
         suit,
         rule: getRuleForCard(symbol),
         isRed: suit === 'hearts' || suit === 'diamonds',
-        image: `${process.env.PUBLIC_URL}/images/cards/${symbol.toLowerCase()}_of_${suit}.png`
-      };
+        image: `${process.env.PUBLIC_URL}/images/cards/${symbol}_${suit}.jpg`
+      });
       
       // Log pour le débogage
-      console.log(`Création carte: ${symbol} de ${suit}, règle: ${card.rule}`);
-      
-      deck.push(card);
+      console.log(`Création carte: ${symbol} de ${suit}, règle: ${getRuleForCard(symbol)}`);
     }
   }
   
