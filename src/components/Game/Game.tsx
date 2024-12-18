@@ -14,7 +14,7 @@ const GameContainer = styled.div`
   min-height: 100vh;
   padding: 20px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
-    url('/images/background.jpg');
+    url('${process.env.PUBLIC_URL}/background.jpg');
   background-size: cover;
   background-position: center;
   color: #fff;

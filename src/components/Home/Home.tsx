@@ -13,7 +13,7 @@ const HomeContainer = styled.div`
   min-height: 100vh;
   padding: 20px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
-    url('/images/background.jpg');
+    url('${process.env.PUBLIC_URL}/background.jpg');
   background-size: cover;
   background-position: center;
   color: #fff;
@@ -187,7 +187,7 @@ const Home: React.FC = () => {
     <HomeContainer>
       <InfoButton isGamePage={false} />
       {showConfetti && <Confetti numberOfPieces={50} recycle={true} />}
-      <TitleImage src="/images/title.png" alt="Le Roi des Barbus" />
+      <TitleImage src={`${process.env.PUBLIC_URL}/title.png`} alt="Roi des Barbus" />
       
       <PlayersList>
         <InputContainer>
