@@ -90,7 +90,7 @@ const TableArea = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 70vh;
+  min-height: 80vh;
   position: relative;
 
   @media (max-width: 768px) {
@@ -105,7 +105,7 @@ const CardArea = styled.div`
   align-items: center;
   width: 100%;
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 
@@ -119,10 +119,12 @@ const CardArea = styled.div`
 `;
 
 const CardsContainer = styled.div`
-  position: relative;
-  width: 220px;
-  height: 320px;
   perspective: 1000px;
+  margin-top: -5rem;
+
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
 `;
 
 const CardWrapper = styled(motion.div)<{ isRevealed: boolean }>`
