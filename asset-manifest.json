@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/roi-des-barbus/static/css/main.e6c13ad2.css",
-    "main.js": "/roi-des-barbus/static/js/main.cda0fced.js",
+    "main.js": "/roi-des-barbus/static/js/main.cebfe0ef.js",
     "static/js/453.df9594bf.chunk.js": "/roi-des-barbus/static/js/453.df9594bf.chunk.js",
     "index.html": "/roi-des-barbus/index.html",
     "main.e6c13ad2.css.map": "/roi-des-barbus/static/css/main.e6c13ad2.css.map",
-    "main.cda0fced.js.map": "/roi-des-barbus/static/js/main.cda0fced.js.map",
+    "main.cebfe0ef.js.map": "/roi-des-barbus/static/js/main.cebfe0ef.js.map",
     "453.df9594bf.chunk.js.map": "/roi-des-barbus/static/js/453.df9594bf.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.cda0fced.js"
+    "static/js/main.cebfe0ef.js"
   ]
 }
