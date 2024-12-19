@@ -180,22 +180,23 @@ const DeckPile = styled(motion.div)`
 const GameEndContainer = styled.div`
   text-align: center;
   margin-top: 20px;
+  h2 {
+    color: #ffd700;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   gap: 20px;
-  justify-content: center;
-  position: absolute;
-  bottom: 100px;
-  left: 0;
-  right: 0;
+  margin-top: 20px;
 `;
 
 const Button = styled(motion.button)`
   font-family: 'MedievalSharp', cursive;
-  font-size: 1.5em;
-  padding: 15px 30px;
+  font-size: 1.2em;
+  padding: 10px 20px;
   background: rgba(139, 69, 19, 0.6);
   color: #ffd700;
   border: 2px solid #ffd700;
