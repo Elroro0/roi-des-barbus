@@ -146,7 +146,7 @@ const CardBack = styled.div`
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  background-image: url(${process.env.PUBLIC_URL}/cardback.jpg);
+  background-image: url('/cardback.jpg');
   background-size: cover;
   background-position: center;
   border-radius: 10px;
