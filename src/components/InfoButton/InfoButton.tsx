@@ -121,30 +121,30 @@ Les autres doivent suivre. Le dernier à le faire boit une gorgée.`;
     const rules: { [key: string]: string } = {
       'A': currentCard.suit === 'hearts' || currentCard.suit === 'diamonds' ?
         "Le joueur boit 1 gorgée." :
-        "Le joueur distribue 1 gorgée à qui il veut.",
+        "Le joueur distribue 1 gorgée à un autre joueur.",
       '2': currentCard.suit === 'hearts' || currentCard.suit === 'diamonds' ?
         "Le joueur boit 2 gorgées." :
-        "Le joueur distribue 2 gorgées à qui il veut.",
+        "Le joueur distribue 2 gorgées à d'autres joueurs (il ne boit pas lui-même).",
       '3': currentCard.suit === 'hearts' || currentCard.suit === 'diamonds' ?
         "Le joueur boit 3 gorgées." :
-        "Le joueur distribue 3 gorgées à qui il veut.",
+        "Le joueur distribue 3 gorgées à d'autres joueurs (il ne boit pas lui-même).",
       '4': currentCard.suit === 'hearts' || currentCard.suit === 'diamonds' ?
         "Le joueur boit 4 gorgées." :
-        "Le joueur distribue 4 gorgées à qui il veut.",
+        "Le joueur distribue 4 gorgées à d'autres joueurs (il ne boit pas lui-même).",
       '5': currentCard.suit === 'hearts' || currentCard.suit === 'diamonds' ?
         "Le joueur boit 5 gorgées." :
-        "Le joueur distribue 5 gorgées à qui il veut.",
-      '6': "Le joueur peut soit ajouter une nouvelle règle, soit supprimer une règle existante.",
-      '7': "Tous les joueurs lèvent la main. Le dernier à le faire boit.",
-      '8': "Le joueur choisit quelqu'un qui devra boire à chaque fois qu'il boit, jusqu'à la prochaine carte 8.",
-      '9': "Tous les joueurs doivent dire un mot qui rime. Le premier qui ne trouve pas boit.",
-      '10': "Le joueur invente une nouvelle catégorie. Le premier qui ne trouve plus de mot boit.",
-      'J': "Le joueur invente une nouvelle règle qui s'appliquera jusqu'à la fin de la partie.",
-      'Q': "Questions ! Le joueur pose une question à qui il veut, qui doit en poser une autre, etc. Le premier qui ne répond pas boit.",
-      'K': "Tu deviens le Roi ! Tu peux mettre ton poing sous ton menton quand tu veux, le dernier à suivre boit."
+        "Le joueur distribue 5 gorgées à d'autres joueurs (il ne boit pas lui-même).",
+      '6': "Le joueur peut ajouter une nouvelle règle temporaire (valable jusqu'à ce qu'un autre joueur tire un 6), ou il peut supprimer une règle existante.",
+      '7': "Le joueur lance le jeu \"Dans ma valise\". À tour de rôle, chaque joueur ajoute un élément à la valise. Option spéciale : Le joueur peut dire \"Répète\" pour défier le dernier joueur. Si le dernier joueur réussit, celui qui a dit \"Répète\" boit le double. Si le dernier joueur échoue, il boit une gorgée.",
+      '8': "Le joueur doit dire une chose qu'il a déjà faite mais que les autres n'ont jamais faite. Ceux qui n'ont jamais fait cette chose boivent une gorgée. Si tout le monde l'a déjà fait, le joueur boit autant de gorgées que le nombre de joueurs.",
+      '9': "Le joueur dit une chose qu'il n'a jamais faite, mais que les autres ont peut-être déjà faite. Ceux qui l'ont déjà faite boivent une gorgée. Si personne ne l'a faite, le joueur boit autant de gorgées que le nombre de joueurs.",
+      '10': "Le joueur choisit un thème (films, couleurs, pays, etc.). Chaque joueur doit nommer un élément du thème. Celui qui échoue boit une gorgée.",
+      'J': "Tous les hommes boivent une gorgée.",
+      'Q': "Toutes les femmes boivent une gorgée.",
+      'K': "Le joueur devient le Roi de la table. Il peut placer son poing sous son menton à tout moment. Les autres doivent suivre. Le dernier à le faire boit une gorgée."
     };
 
-    return rules[currentCard.symbol] || "Règle non trouvée";
+    return rules[currentCard.symbol] || "Règle inconnue";
   };
 
   return (
