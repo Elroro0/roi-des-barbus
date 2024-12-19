@@ -80,14 +80,10 @@ export const generateDeck = (): Card[] => {
         suit,
         rule: getRuleForCard(symbol, suit),
         isRed: suit === 'hearts' || suit === 'diamonds',
-        image: `/images/cards/${symbol}_${suit}.jpg`
+        image: `D:/rdb/public/images/cards/${symbol}_${suit}.jpg`
       });
-      
-      // Log pour le débogage
-      console.log(`Création carte: ${symbol} de ${suit}, règle: ${getRuleForCard(symbol, suit)}`);
     }
   }
   
-  // Mélanger le deck une seule fois mais de manière plus approfondie
   return shuffleArray(deck);
 };

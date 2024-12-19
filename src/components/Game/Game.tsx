@@ -212,6 +212,25 @@ const Button = styled(motion.button)`
   }
 `;
 
+const RestartButton = styled(motion.button)`
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.5em;
+  padding: 15px 30px;
+  background: rgba(139, 69, 19, 0.6);
+  color: #ffd700;
+  border: 2px solid #ffd700;
+  border-radius: 8px;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  }
+`;
+
 const Game: React.FC = () => {
   const navigate = useNavigate();
   const { players } = usePlayers();
@@ -220,34 +239,34 @@ const Game: React.FC = () => {
   const [deck, setDeck] = useState<Card[]>(shuffleArray(generateDeck()));
   const [gameEnded, setGameEnded] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isRevealed, setIsRevealed] = useState(false);
 
   const nextPlayer = players[currentPlayerIndex];
 
   const handleCardClick = () => {
-    if (deck.length > 0) {
-      const newDeck = [...deck];
-      const drawnCard = newDeck.pop();
-      
-      if (drawnCard?.symbol === 'K') {
-        setShowConfetti(true);
-      } else {
-        setShowConfetti(false);
+    if (!isRevealed) {
+      setIsRevealed(true);
+    } else {
+      if (deck.length > 0) {
+        const newDeck = [...deck];
+        const drawnCard = newDeck.pop();
+        
+        if (drawnCard?.symbol === 'K') {
+          setShowConfetti(true);
+        } else {
+          setShowConfetti(false);
+        }
+        
+        setDeck(newDeck);
+        setCurrentCard(drawnCard || null);
+        setIsRevealed(false);
+        
+        if (deck.length === 0) {
+          setGameEnded(true);
+        } else {
+          setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
+        }
       }
-      
-      setDeck(newDeck);
-      setCurrentCard(drawnCard || null);
-      
-      if (deck.length === 0) {
-        setGameEnded(true);
-      } else {
-        setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
-      }
-    }
-  };
-
-  const handleNextTurn = () => {
-    if (deck.length === 0) {
-      setGameEnded(true);
     }
   };
 
@@ -257,6 +276,7 @@ const Game: React.FC = () => {
     setCurrentCard(null);
     setCurrentPlayerIndex(0);
     setGameEnded(false);
+    setIsRevealed(false);
   };
 
   useEffect(() => {
@@ -316,44 +336,34 @@ const Game: React.FC = () => {
       </style>
       <BackButton
         onClick={() => navigate('/')}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
       >
         ←
       </BackButton>
 
       <InfoButtonWrapper>
-        <InfoButton currentCard={currentCard} isGamePage={true} />
+        <InfoButton isGamePage={true} />
       </InfoButtonWrapper>
 
-      <GameTitle
-        src={process.env.PUBLIC_URL + '/images/title.png'}
-        alt="Le Roi des Barbus"
-        onClick={() => navigate('/')}
-        initial={{ scale: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      />
-
       <PlayerTurnText>
-        {nextPlayer ? `À ${nextPlayer} de jouer !` : 'Commençons la partie !'}
+        {gameEnded ? "Partie terminée !" : `À ${nextPlayer} de jouer !`}
       </PlayerTurnText>
 
       <TableArea>
         <CardArea>
           <CardsContainer>
             <CardWrapper
-              isRevealed={true}
+              isRevealed={isRevealed}
               initial={{ rotateY: 0 }}
-              animate={{ rotateY: 180 }}
-              transition={{ 
-                duration: 0.6,
-                ease: "easeInOut"
-              }}
+              animate={{ rotateY: isRevealed ? 180 : 0 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
             >
-              <CardBack onClick={handleCardClick} />
+              <CardBack onClick={!isRevealed ? handleCardClick : undefined} />
               {currentCard && (
-                <CardFront>
+                <CardFront onClick={isRevealed ? handleCardClick : undefined}>
                   <CardImage 
-                    src={currentCard.image} 
+                    src={currentCard.image}
                     alt={`${currentCard.symbol} of ${currentCard.suit}`} 
                   />
                 </CardFront>
@@ -364,27 +374,9 @@ const Game: React.FC = () => {
       </TableArea>
 
       {gameEnded && (
-        <>
-          <GameEndContainer>
-            <h2>Partie terminée !</h2>
-          </GameEndContainer>
-          <ButtonContainer>
-            <Button 
-              onClick={startNewGame}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Rejouer
-            </Button>
-            <Button 
-              onClick={() => navigate('/')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Retour à l'accueil
-            </Button>
-          </ButtonContainer>
-        </>
+        <RestartButton onClick={startNewGame}>
+          Nouvelle partie
+        </RestartButton>
       )}
     </GameContainer>
   );
