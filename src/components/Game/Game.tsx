@@ -146,11 +146,12 @@ const CardBack = styled.div`
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  background-image: url('/cardback.jpg');
+  background-image: url(${process.env.PUBLIC_URL}/cardback.jpg);
   background-size: cover;
   background-position: center;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 `;
 
 const CardFront = styled.div`
@@ -159,19 +160,17 @@ const CardFront = styled.div`
   height: 100%;
   backface-visibility: hidden;
   transform: rotateY(180deg);
-  background: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
+  cursor: pointer;
+  background: white;
 `;
 
-const CardImage = styled(motion.img)`
+const CardImage = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 10px;
-  margin: 0;
-  padding: 0;
 `;
 
 const DeckPile = styled(motion.div)`
@@ -325,8 +324,6 @@ const Game: React.FC = () => {
       </style>
       <BackButton
         onClick={() => navigate('/')}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
       >
         ←
       </BackButton>
