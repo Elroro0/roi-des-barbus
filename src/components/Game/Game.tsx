@@ -239,33 +239,27 @@ const Game: React.FC = () => {
   const [deck, setDeck] = useState<Card[]>(shuffleArray(generateDeck()));
   const [gameEnded, setGameEnded] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [isRevealed, setIsRevealed] = useState(false);
 
   const nextPlayer = players[currentPlayerIndex];
 
   const handleCardClick = () => {
-    if (!isRevealed) {
-      setIsRevealed(true);
-    } else {
-      if (deck.length > 0) {
-        const newDeck = [...deck];
-        const drawnCard = newDeck.pop();
-        
-        if (drawnCard?.symbol === 'K') {
-          setShowConfetti(true);
-        } else {
-          setShowConfetti(false);
-        }
-        
-        setDeck(newDeck);
-        setCurrentCard(drawnCard || null);
-        setIsRevealed(false);
-        
-        if (deck.length === 0) {
-          setGameEnded(true);
-        } else {
-          setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
-        }
+    if (deck.length > 0) {
+      const newDeck = [...deck];
+      const drawnCard = newDeck.pop();
+      
+      if (drawnCard?.symbol === 'K') {
+        setShowConfetti(true);
+      } else {
+        setShowConfetti(false);
+      }
+      
+      setDeck(newDeck);
+      setCurrentCard(drawnCard || null);
+      
+      if (deck.length === 0) {
+        setGameEnded(true);
+      } else {
+        setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
       }
     }
   };
@@ -276,12 +270,7 @@ const Game: React.FC = () => {
     setCurrentCard(null);
     setCurrentPlayerIndex(0);
     setGameEnded(false);
-    setIsRevealed(false);
   };
-
-  useEffect(() => {
-    console.log("État des confettis:", showConfetti);
-  }, [showConfetti]);
 
   useEffect(() => {
     if (players.length < 2) {
@@ -343,27 +332,36 @@ const Game: React.FC = () => {
       </BackButton>
 
       <InfoButtonWrapper>
-        <InfoButton isGamePage={true} />
+        <InfoButton currentCard={currentCard} isGamePage={true} />
       </InfoButtonWrapper>
 
+      <GameTitle
+        src={process.env.PUBLIC_URL + '/images/title.png'}
+        alt="Le Roi des Barbus"
+        onClick={() => navigate('/')}
+        initial={{ scale: 1 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      />
+
       <PlayerTurnText>
-        {gameEnded ? "Partie terminée !" : `À ${nextPlayer} de jouer !`}
+        {nextPlayer ? `À ${nextPlayer} de jouer !` : 'Commençons la partie !'}
       </PlayerTurnText>
 
       <TableArea>
         <CardArea>
           <CardsContainer>
             <CardWrapper
-              isRevealed={isRevealed}
+              isRevealed={currentCard !== null}
               initial={{ rotateY: 0 }}
-              animate={{ rotateY: isRevealed ? 180 : 0 }}
+              animate={{ rotateY: currentCard ? 180 : 0 }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
             >
-              <CardBack onClick={!isRevealed ? handleCardClick : undefined} />
+              <CardBack onClick={handleCardClick} />
               {currentCard && (
-                <CardFront onClick={isRevealed ? handleCardClick : undefined}>
+                <CardFront onClick={handleCardClick}>
                   <CardImage 
-                    src={currentCard.image}
+                    src={currentCard.image} 
                     alt={`${currentCard.symbol} of ${currentCard.suit}`} 
                   />
                 </CardFront>
@@ -374,9 +372,27 @@ const Game: React.FC = () => {
       </TableArea>
 
       {gameEnded && (
-        <RestartButton onClick={startNewGame}>
-          Nouvelle partie
-        </RestartButton>
+        <>
+          <GameEndContainer>
+            <h2>Partie terminée !</h2>
+          </GameEndContainer>
+          <ButtonContainer>
+            <Button 
+              onClick={startNewGame}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Rejouer
+            </Button>
+            <Button 
+              onClick={() => navigate('/')}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Retour à l'accueil
+            </Button>
+          </ButtonContainer>
+        </>
       )}
     </GameContainer>
   );
