@@ -17,9 +17,9 @@ const getRuleForCard = (symbol: string, suit: string): string => {
     case 'J':
       return 'Tous les hommes boivent une gorgée.';
     case '10':
-      return 'Le joueur choisit un thème (films, couleurs, pays, etc.). Chaque joueur doit nommer un élément du thème. Celui qui échoue boit une gorgée.';
-    case '9':
       return 'Le joueur dit une chose qu\'il n\'a jamais faite, mais que les autres ont peut-être déjà faite. Ceux qui l\'ont déjà faite boivent une gorgée. Si personne ne l\'a faite, le joueur boit autant de gorgées que le nombre de joueurs.';
+    case '9':
+      return 'Le joueur choisit un thème (films, couleurs, pays, etc.). Chaque joueur doit nommer un élément du thème. Celui qui échoue boit une gorgée.';
     case '8':
       return 'Le joueur doit dire une chose qu\'il a déjà faite mais que les autres n\'ont jamais faite. Ceux qui n\'ont jamais fait cette chose boivent une gorgée. Si tout le monde l\'a déjà fait, le joueur boit autant de gorgées que le nombre de joueurs.';
     case '7':
