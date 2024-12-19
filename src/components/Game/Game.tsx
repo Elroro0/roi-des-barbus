@@ -217,22 +217,18 @@ const Game: React.FC = () => {
   const { players } = usePlayers();
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [currentCard, setCurrentCard] = useState<Card | null>(null);
-  const [isDrawing, setIsDrawing] = useState(true);
-  const [gameEnded, setGameEnded] = useState(false);
   const [deck, setDeck] = useState<Card[]>(shuffleArray(generateDeck()));
+  const [gameEnded, setGameEnded] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
   const nextPlayer = players[currentPlayerIndex];
 
   const handleCardClick = () => {
-    if (isDrawing && deck.length > 0) {
+    if (deck.length > 0) {
       const newDeck = [...deck];
       const drawnCard = newDeck.pop();
       
-      console.log("Carte tirée:", drawnCard?.symbol);
-      
       if (drawnCard?.symbol === 'K') {
-        console.log("Roi détecté !");
         setShowConfetti(true);
       } else {
         setShowConfetti(false);
@@ -240,18 +236,18 @@ const Game: React.FC = () => {
       
       setDeck(newDeck);
       setCurrentCard(drawnCard || null);
-      setIsDrawing(false);
+      
+      if (deck.length === 0) {
+        setGameEnded(true);
+      } else {
+        setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
+      }
     }
   };
 
   const handleNextTurn = () => {
-    if (!isDrawing) {
-      if (deck.length === 0) {
-        setGameEnded(true);
-        return;
-      }
-      setIsDrawing(true);
-      setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
+    if (deck.length === 0) {
+      setGameEnded(true);
     }
   };
 
@@ -259,7 +255,6 @@ const Game: React.FC = () => {
     const newDeck = shuffleArray(generateDeck());
     setDeck(newDeck);
     setCurrentCard(null);
-    setIsDrawing(true);
     setCurrentPlayerIndex(0);
     setGameEnded(false);
   };
@@ -346,9 +341,9 @@ const Game: React.FC = () => {
         <CardArea>
           <CardsContainer>
             <CardWrapper
-              isRevealed={!isDrawing}
+              isRevealed={true}
               initial={{ rotateY: 0 }}
-              animate={{ rotateY: isDrawing ? 0 : 180 }}
+              animate={{ rotateY: 180 }}
               transition={{ 
                 duration: 0.6,
                 ease: "easeInOut"
@@ -356,7 +351,7 @@ const Game: React.FC = () => {
             >
               <CardBack onClick={handleCardClick} />
               {currentCard && (
-                <CardFront onClick={handleNextTurn}>
+                <CardFront>
                   <CardImage 
                     src={currentCard.image} 
                     alt={`${currentCard.symbol} of ${currentCard.suit}`} 
