@@ -143,6 +143,12 @@ Roi: Tu deviens le Roi ! Tu peux mettre ton poing sous ton menton quand tu veux,
       '10': "Le joueur invente une nouvelle catégorie. Le premier qui ne trouve plus de mot boit.",
       'J': "Le joueur invente une nouvelle règle qui s'appliquera jusqu'à la fin de la partie.",
       'Q': "Questions ! Le joueur pose une question à qui il veut, qui doit en poser une autre, etc. Le premier qui ne répond pas boit.",
+      '7': "Dans ma valise ",
+      '8': "J'ai déjà: Le joueur doit dire quelque chose qui la déjà fait",
+      '9': "Je n'ai jamais: Le joueur doit dire quelque chose qui la jamais fait",
+      '10': "Le joueur choisit un thème . Le premier qui ne trouve plus de mot ou répète boit.",
+      'J': "Tous les hommes boivent ",
+      'Q': "Toutes les femmes boivent",
       'K': "Tu deviens le Roi ! Tu peux mettre ton poing sous ton menton quand tu veux, le dernier à suivre boit."
     };
 
