@@ -100,17 +100,17 @@ As ♠♣: Le joueur distribue 1 gorgée
 
 6: Le joueur peut soit ajouter une nouvelle règle, soit supprimer une règle existante
 
-7: Tous les joueurs lèvent la main. Le dernier à le faire boit.
+7: Dans ma valise.
 
-8: Le joueur choisit quelqu'un qui devra boire à chaque fois qu'il boit, jusqu'à la prochaine carte 8.
+8: J'ai déja: le joueur doit dire quelque chose qu'il a deja fait. 
 
-9: Tous les joueurs doivent dire un mot qui rime. Le premier qui ne trouve pas boit.
+9: Je n'ai jamais: le joueur doit dire quelque chose qu'il a jamais fait mais que les autres joueur ont déja fait 
 
-10: Le joueur invente une nouvelle catégorie. Le premier qui ne trouve plus de mot boit.
+10: Le joueur choisir un thème
 
-Valet: Le joueur invente une nouvelle règle qui s'appliquera jusqu'à la fin de la partie.
+Valet: Tous les hommes boivent 
 
-Dame: Questions ! Le joueur pose une question à qui il veut, qui doit en poser une autre, etc. Le premier qui ne répond pas boit.
+Dame: Toutes dames voivent 
 
 Roi: Tu deviens le Roi ! Tu peux mettre ton poing sous ton menton quand tu veux, le dernier à suivre boit.`;
   };
