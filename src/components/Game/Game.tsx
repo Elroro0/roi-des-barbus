@@ -61,13 +61,54 @@ const GameTitle = styled(motion.img)`
   }
 `;
 
-const GameContent = styled.div`
+const TableArea = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+  height: 60vh;
+  position: relative;
+  cursor: pointer;
+`;
+
+const CardArea = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  max-width: 1200px;
+  height: 100%;
+  position: relative;
+`;
+
+const DeckPile = styled.div`
+  position: absolute;
+  right: 20%;
+  transform: translateX(50%);
+  cursor: pointer;
+`;
+
+const PlayedPile = styled.div`
+  position: absolute;
+  left: 20%;
+  transform: translateX(-50%);
+`;
+
+const CardImage = styled(motion.img)`
+  width: 300px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+`;
+
+const CardBack = styled(motion.div)`
+  width: 300px;
+  height: 420px;
+  background-image: url('${process.env.PUBLIC_URL}/images/card-back.png');
+  background-size: cover;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 `;
 
 const PlayerTurnText = styled.h2`
@@ -81,110 +122,8 @@ const PlayerTurnText = styled.h2`
   border-radius: 15px;
   border: 2px solid #ffd700;
   margin-bottom: 2rem;
-  white-space: nowrap;
-`;
-
-const TableArea = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 80vh;
-  position: relative;
-
-  @media (max-width: 768px) {
-    min-height: 60vh;
-    margin-top: -2rem;
-  }
-`;
-
-const CardArea = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  @media (max-width: 768px) {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin-top: -3rem;
-  }
-`;
-
-const CardsContainer = styled.div`
-  perspective: 1000px;
-  margin-top: -5rem;
-
-  @media (max-width: 768px) {
-    margin-top: 0;
-  }
-`;
-
-const CardWrapper = styled(motion.div)<{ isRevealed: boolean }>`
-  width: 300px;
-  height: 450px;
-  position: relative;
-  transform-style: preserve-3d;
-  cursor: pointer;
-  margin-top: 2rem;
-
-  @media (max-width: 768px) {
-    width: 200px;
-    height: 300px;
-  }
-`;
-
-const CardBack = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  background-image: url(${process.env.PUBLIC_URL}/cardback.jpg);
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-`;
-
-const CardFront = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  transform: rotateY(180deg);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  background: white;
-`;
-
-const CardImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 10px;
-`;
-
-const DeckPile = styled(motion.div)`
-  display: none;
-`;
-
-const GameEndContainer = styled.div`
-  text-align: center;
-  margin-top: 20px;
-  h2 {
-    color: #ffd700;
-    font-size: 2em;
-    margin-bottom: 20px;
-  }
+  opacity: ${props => props.visible ? 1 : 0};
+  transition: opacity 0.3s ease;
 `;
 
 const ButtonContainer = styled.div`
@@ -216,54 +155,45 @@ const Button = styled(motion.button)`
   }
 `;
 
-const RestartButton = styled(motion.button)`
-  font-family: 'MedievalSharp', cursive;
-  font-size: 1.5em;
-  padding: 15px 30px;
-  background: rgba(139, 69, 19, 0.6);
-  color: #ffd700;
-  border: 2px solid #ffd700;
-  border-radius: 8px;
-  cursor: pointer;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-  }
-`;
-
 const Game: React.FC = () => {
   const navigate = useNavigate();
   const { players } = usePlayers();
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(-1);
   const [currentCard, setCurrentCard] = useState<Card | null>(null);
   const [deck, setDeck] = useState<Card[]>(shuffleArray(generateDeck()));
+  const [playedCards, setPlayedCards] = useState<Card[]>([]);
   const [gameEnded, setGameEnded] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isFlipping, setIsFlipping] = useState(false);
 
-  const nextPlayer = players[currentPlayerIndex];
+  const nextPlayer = currentPlayerIndex >= 0 ? players[currentPlayerIndex] : null;
 
   const handleCardClick = () => {
-    if (deck.length > 0) {
+    if (deck.length > 0 && !isFlipping) {
+      setIsFlipping(true);
       const newDeck = [...deck];
       const drawnCard = newDeck.pop();
       
-      if (drawnCard?.symbol === 'K') {
-        setShowConfetti(true);
-      } else {
-        setShowConfetti(false);
-      }
-      
-      setDeck(newDeck);
-      setCurrentCard(drawnCard || null);
-      
-      if (deck.length === 0) {
-        setGameEnded(true);
-      } else {
-        setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
+      if (drawnCard) {
+        if (drawnCard.symbol === 'K') {
+          setShowConfetti(true);
+        } else {
+          setShowConfetti(false);
+        }
+        
+        setTimeout(() => {
+          setDeck(newDeck);
+          setCurrentCard(drawnCard);
+          setPlayedCards(prev => [...prev, drawnCard]);
+          setCurrentPlayerIndex(prev => 
+            prev === -1 ? 0 : (prev + 1) % players.length
+          );
+          setIsFlipping(false);
+        }, 300);
+
+        if (newDeck.length === 0) {
+          setGameEnded(true);
+        }
       }
     }
   };
@@ -272,7 +202,8 @@ const Game: React.FC = () => {
     const newDeck = shuffleArray(generateDeck());
     setDeck(newDeck);
     setCurrentCard(null);
-    setCurrentPlayerIndex(0);
+    setCurrentPlayerIndex(-1);
+    setPlayedCards([]);
     setGameEnded(false);
   };
 
@@ -286,6 +217,53 @@ const Game: React.FC = () => {
 
   return (
     <GameContainer>
+      <BackButton onClick={() => navigate('/')}>←</BackButton>
+      <InfoButtonWrapper>
+        <InfoButton currentCard={currentCard} isGamePage={true} />
+      </InfoButtonWrapper>
+
+      <GameTitle 
+        src={`${process.env.PUBLIC_URL}/images/title.png`}
+        alt="Le Roi des Barbus"
+      />
+
+      <PlayerTurnText visible={currentPlayerIndex >= 0}>
+        À {nextPlayer || ''} de jouer !
+      </PlayerTurnText>
+
+      <TableArea onClick={!gameEnded ? handleCardClick : undefined}>
+        <CardArea>
+          <PlayedPile>
+            {playedCards.length > 0 && (
+              <CardImage
+                src={playedCards[playedCards.length - 1].image}
+                alt="Played card"
+                initial={{ rotateY: 180, opacity: 0 }}
+                animate={{ rotateY: 0, opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+            )}
+          </PlayedPile>
+
+          <DeckPile>
+            {deck.length > 0 && (
+              <CardBack
+                initial={{ rotateY: 0 }}
+                animate={{ rotateY: isFlipping ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            )}
+          </DeckPile>
+        </CardArea>
+      </TableArea>
+
+      {gameEnded && (
+        <ButtonContainer>
+          <Button onClick={startNewGame}>Rejouer</Button>
+          <Button onClick={() => navigate('/')}>Retour à l'accueil</Button>
+        </ButtonContainer>
+      )}
+
       {showConfetti && (
         <div style={{ 
           position: 'fixed', 
@@ -314,86 +292,6 @@ const Game: React.FC = () => {
             friction={0.99}
           />
         </div>
-      )}
-      <style>
-        {`
-          @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-          }
-          @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-          }
-        `}
-      </style>
-      <BackButton
-        onClick={() => navigate('/')}
-      >
-        ←
-      </BackButton>
-
-      <InfoButtonWrapper>
-        <InfoButton currentCard={currentCard} isGamePage={true} />
-      </InfoButtonWrapper>
-
-      <GameTitle
-        src={process.env.PUBLIC_URL + '/images/title.png'}
-        alt="Le Roi des Barbus"
-        onClick={() => navigate('/')}
-        initial={{ scale: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      />
-
-      <PlayerTurnText>
-        {nextPlayer ? `À ${nextPlayer} de jouer !` : 'Commençons la partie !'}
-      </PlayerTurnText>
-
-      <TableArea>
-        {currentCard ? (
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <CardImage
-              src={currentCard.image}
-              alt={`${currentCard.symbol} of ${currentCard.suit}`}
-              onError={(e) => {
-                const img = e.target as HTMLImageElement;
-                console.error(`Failed to load image: ${img.src}`);
-                img.src = `${process.env.PUBLIC_URL}/images/cards/${currentCard.symbol}_${currentCard.suit}.jpg`;
-              }}
-            />
-          </motion.div>
-        ) : (
-          <CardBack onClick={!gameEnded ? handleCardClick : undefined} />
-        )}
-      </TableArea>
-
-      {gameEnded && (
-        <>
-          <GameEndContainer>
-            <h2>Partie terminée !</h2>
-          </GameEndContainer>
-          <ButtonContainer>
-            <Button 
-              onClick={startNewGame}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Rejouer
-            </Button>
-            <Button 
-              onClick={() => navigate('/')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Retour à l'accueil
-            </Button>
-          </ButtonContainer>
-        </>
       )}
     </GameContainer>
   );
