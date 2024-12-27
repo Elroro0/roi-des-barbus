@@ -75,12 +75,13 @@ export const generateDeck = (): Card[] => {
   
   for (const suit of suits) {
     for (const symbol of symbols) {
+      const rule = getRuleForCard(symbol, suit);
       deck.push({
         symbol,
         suit,
-        rule: getRuleForCard(symbol, suit),
+        rule,
         isRed: suit === 'hearts' || suit === 'diamonds',
-        image: `${process.env.PUBLIC_URL}/images/cards/${symbol}_${suit}.jpg`
+        image: `${process.env.PUBLIC_URL}/images/cards/${symbol.toLowerCase()}_${suit}.jpg`
       });
     }
   }
