@@ -190,13 +190,17 @@ const GameEndContainer = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 20px;
-  margin-top: 20px;
+  justify-content: center;
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  right: 0;
 `;
 
 const Button = styled(motion.button)`
   font-family: 'MedievalSharp', cursive;
-  font-size: 1.2em;
-  padding: 10px 20px;
+  font-size: 1.5em;
+  padding: 15px 30px;
   background: rgba(139, 69, 19, 0.6);
   color: #ffd700;
   border: 2px solid #ffd700;
