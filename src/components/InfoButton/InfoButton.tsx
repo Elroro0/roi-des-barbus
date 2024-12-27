@@ -95,10 +95,11 @@ Si le dernier joueur échoue, il boit une gorgée.
 Carte 8 : Le joueur doit dire une chose qu'il a déjà faite mais que les autres n'ont jamais faite.
 Ceux qui n'ont jamais fait cette chose boivent une gorgée.
 Si tout le monde l'a déjà fait, le joueur boit autant de gorgées que le nombre de joueurs.
-Carte 9 : Le joueur choisit un thème (films, couleurs, pays, etc.).
+Carte 9 :  Le joueur dit une chose qu'il n'a jamais faite, mais que les autres ont peut-être déjà faite.
+Ceux qui l'ont déjà faite boivent une gorgée. Si personne ne l'a faite, le joueur boit autant de gorgées que le nombre de joueurs. Le joueur choisit un thème (films, couleurs, pays, etc.).
 Chaque joueur doit nommer un élément du thème. Celui qui échoue boit une gorgée.
-Carte 10 : Le joueur dit une chose qu'il n'a jamais faite, mais que les autres ont peut-être déjà faite.
-Ceux qui l'ont déjà faite boivent une gorgée. Si personne ne l'a faite, le joueur boit autant de gorgées que le nombre de joueurs.
+Carte 10 :  Le joueur choisit un thème (films, couleurs, pays, etc.).
+Chaque joueur doit nommer un élément du thème. Celui qui échoue boit une gorgée.
 
 Cartes Trèfle et Pique (Noires)
 Cartes numérotées de 1 à 5 : Le joueur distribue le nombre de gorgées indiqué à d'autres joueurs (il ne boit pas lui-même).
