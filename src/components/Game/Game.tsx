@@ -351,26 +351,25 @@ const Game: React.FC = () => {
       </PlayerTurnText>
 
       <TableArea>
-        <CardArea>
-          <CardsContainer>
-            <CardWrapper
-              isRevealed={currentCard !== null}
-              initial={{ rotateY: 0 }}
-              animate={{ rotateY: currentCard ? 180 : 0 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-            >
-              <CardBack onClick={handleCardClick} />
-              {currentCard && (
-                <CardFront onClick={handleCardClick}>
-                  <CardImage 
-                    src={currentCard.image} 
-                    alt={`${currentCard.symbol} of ${currentCard.suit}`} 
-                  />
-                </CardFront>
-              )}
-            </CardWrapper>
-          </CardsContainer>
-        </CardArea>
+        {currentCard ? (
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <CardImage
+              src={currentCard.image}
+              alt={`${currentCard.symbol} of ${currentCard.suit}`}
+              onError={(e) => {
+                const img = e.target as HTMLImageElement;
+                console.error(`Failed to load image: ${img.src}`);
+                img.src = `${process.env.PUBLIC_URL}/images/cards/${currentCard.symbol}_${currentCard.suit}.jpg`;
+              }}
+            />
+          </motion.div>
+        ) : (
+          <CardBack onClick={!gameEnded ? handleCardClick : undefined} />
+        )}
       </TableArea>
 
       {gameEnded && (

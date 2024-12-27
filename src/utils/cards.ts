@@ -81,7 +81,7 @@ export const generateDeck = (): Card[] => {
         suit,
         rule,
         isRed: suit === 'hearts' || suit === 'diamonds',
-        image: `${process.env.PUBLIC_URL}/images/cards/${symbol.toLowerCase()}_${suit}.jpg`
+        image: `${process.env.PUBLIC_URL}/images/cards/${symbol}_${suit}.jpg`
       });
     }
   }
